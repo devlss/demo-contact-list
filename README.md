@@ -1,1 +1,9 @@
-# _template-common
+# Демонстрационное приложение: список контактов
+
+Реализовано с помощью [create-react-app](README_CRA.md)
+
+## Запуск
+-   Для запуска сервера выполните:
+    ```bash
+    npm run start:server
+    ```

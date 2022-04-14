@@ -1,0 +1,29 @@
+{
+	"contacts": [
+		{
+			"name": "user 1",
+			"phone": "+79991111111",
+			"email": "1test@email.ru"
+		},
+		{
+			"name": "user 2",
+			"phone": "+79991111112",
+			"email": "2test@email.ru"
+		},
+		{
+			"name": "user 1",
+			"phone": "+79991111113",
+			"email": "3test@email.ru"
+		}
+	],
+	"users": [
+		{
+			"login": "root",
+			"password": "123456"
+		},
+		{
+			"login": "artuser",
+			"password": "111111"
+		}
+	]
+}
