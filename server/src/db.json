@@ -1,16 +1,19 @@
 {
 	"contacts": [
 		{
+			"id": 1,
 			"name": "user 1",
 			"phone": "+79991111111",
 			"email": "1test@email.ru"
 		},
 		{
+			"id": 2,
 			"name": "user 2",
 			"phone": "+79991111112",
 			"email": "2test@email.ru"
 		},
 		{
+			"id": 3,
 			"name": "user 1",
 			"phone": "+79991111113",
 			"email": "3test@email.ru"
