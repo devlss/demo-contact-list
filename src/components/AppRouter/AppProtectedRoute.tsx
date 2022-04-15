@@ -4,7 +4,7 @@ import {useAppSelector} from '../../store/hooks';
 
 export const AppProtectedRoute: FC<PropsWithChildren<{}>> = ({children}) => {
 	const location = useLocation();
-	const key = useAppSelector(({auth}) => auth.key);
+	const auth = useAppSelector(({auth}) => auth);
 
-	return <>{key ? children : <Navigate to="/login" state={{from: location}} replace />}</>;
+	return <>{auth.key ? children : <Navigate to="/login" state={{from: location, isError: auth.error}} replace />}</>;
 };

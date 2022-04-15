@@ -22,3 +22,10 @@ export function logoutAction() {
 		type: AUTH_ACTION_TYPES.LOGOUT
 	};
 }
+
+export function setIsErrorAction(payload: boolean) {
+	return {
+		type: AUTH_ACTION_TYPES.SET_IS_ERROR,
+		payload
+	};
+}

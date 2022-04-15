@@ -1,11 +1,13 @@
 export interface IAuthState {
 	key?: string;
+	error: boolean;
 }
 
 export const enum AUTH_ACTION_TYPES {
 	LOGIN = 'dcl/auth/login',
 	LOGOUT = 'dcl/auth/logout',
-	SET_KEY = 'dcl/auth/set-key'
+	SET_KEY = 'dcl/auth/set-key',
+	SET_IS_ERROR = 'dcl/auth/set-is-error'
 }
 
 export interface LoginAction {
@@ -25,4 +27,9 @@ export interface SetKeyAction {
 	payload: string;
 }
 
-export type AuthActions = LoginAction | LogoutAction | SetKeyAction;
+export interface SetIsErrorAction {
+	type: AUTH_ACTION_TYPES.SET_IS_ERROR;
+	payload: boolean;
+}
+
+export type AuthActions = LoginAction | LogoutAction | SetKeyAction | SetIsErrorAction;

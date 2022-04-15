@@ -1,7 +1,7 @@
 import {FC, useCallback, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../store/hooks';
 import {getContactsRequest} from '../../store/Contacts/actions';
-import {logoutAction} from '../../store/Auth/actions';
+import {setIsErrorAction} from '../../store/Auth/actions';
 import type {ContactsProps} from './ContactsPage.types';
 
 import './ContactsPage.scss';
@@ -24,8 +24,9 @@ export const ContactsPage: FC<ContactsProps> = () => {
 	const contactsRequest = useCallback(async () => {
 		try {
 			await dispatch(getContactsRequest());
+			dispatch(setIsErrorAction(false));
 		} catch (error) {
-			dispatch(logoutAction());
+			dispatch(setIsErrorAction(true));
 		}
 	}, [dispatch]);
 
