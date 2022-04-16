@@ -1,3 +1,1 @@
-export interface ContactsProps {
-
-}
+export interface ContactsPageProps {}

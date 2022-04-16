@@ -1,13 +1,8 @@
-import {IApiContact, IContact} from '../../api/types';
+import {IApiContact, IApiGetOptions, IContact} from '../../api/types';
 
 export interface IContactsListState {
 	list: IApiContact[];
 	count: number;
-}
-
-export interface IGetRequestParams {
-	page?: number;
-	search?: string;
 }
 
 export interface IPutRequestParams {
@@ -16,6 +11,7 @@ export interface IPutRequestParams {
 }
 
 export const enum CONTACTS_LIST_ACTION_TYPES {
+	SET = 'dcl/contacts/set',
 	ADD = 'dcl/contacts/add',
 	UPDATE = 'dcl/contacts/update',
 	REMOVE = 'dcl/contacts/remove',
@@ -26,9 +22,14 @@ export const enum CONTACTS_LIST_ACTION_TYPES {
 	R_DELETE = 'dcl/contacts/r-delete'
 }
 
+export interface SetContactsAction {
+	type: CONTACTS_LIST_ACTION_TYPES.SET;
+	payload: {contacts: IApiContact[], count?: number};
+}
+
 export interface AddContactsAction {
 	type: CONTACTS_LIST_ACTION_TYPES.ADD;
-	payload: {contacts: IApiContact[], count: number};
+	payload: {contacts: IApiContact[], count?: number};
 }
 
 export interface UpdateContactAction {
@@ -37,7 +38,7 @@ export interface UpdateContactAction {
 }
 export interface RemoveContactAction {
 	type: CONTACTS_LIST_ACTION_TYPES.REMOVE;
-	payload: {id: number, count: number};
+	payload: {id: number};
 }
 export interface ClearContactsAction {
 	type: CONTACTS_LIST_ACTION_TYPES.CLEAR;
@@ -45,7 +46,7 @@ export interface ClearContactsAction {
 
 export interface GetContactsRequest {
 	type: CONTACTS_LIST_ACTION_TYPES.R_GET;
-	payload: IGetRequestParams;
+	payload: IApiGetOptions;
 }
 
 export interface PostContactRequest {
@@ -60,8 +61,8 @@ export interface PutContactRequest {
 
 export interface DeleteContactRequest {
 	type: CONTACTS_LIST_ACTION_TYPES.R_DELETE;
-	payload: {id: number};
+	payload: {id: number, options: IApiGetOptions};
 }
 
-export type ContactsListActions = AddContactsAction | UpdateContactAction | RemoveContactAction | ClearContactsAction;
+export type ContactsListActions = SetContactsAction | AddContactsAction | UpdateContactAction | RemoveContactAction | ClearContactsAction;
 export type ContactsListRequests = GetContactsRequest | PostContactRequest | PutContactRequest | DeleteContactRequest;

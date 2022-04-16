@@ -1,0 +1,66 @@
+.contacts-list {
+	overflow: auto;
+	&__edit-icon {
+		&::before {
+			content: '\00270E';
+		}
+	}
+	&__delete-icon {
+		&::before {
+			content: '\00D7';
+		}
+	}
+	&__create-icon {
+		&::before {
+			content: '\00274C';
+		}
+	}
+	&__search-icon {
+		&::before {
+			content: '\00274C';
+		}
+	}
+	&__button-group {
+		opacity: 0.2;
+		transition: opacity 0.15s;
+	}
+	.table tbody tr {
+		vertical-align: middle;
+		&:hover * {
+			opacity: 1;
+		}
+	}
+	&-table {
+		&__header {
+			z-index: 2;
+			position: sticky;
+			top: 0;
+			background-color: var(--bs-gray-200);
+		}
+		&__column-number {
+			width: 3em;
+		}
+		// &__column-name {
+		// }
+		// &__column-phone {
+		// }
+		// &__column-email {
+		// }
+		&__column-buttons {
+			width: 5em;
+		}
+	}
+	&__grid {
+		display: grid;
+		grid-template: 2rem/ 2rem repeat(4, 1fr);
+		grid-template-areas:
+			'head-num head-name head-phone head-email head-buttons'
+			'num name phone email buttons';
+		// grid-auto-flow: column;
+		// grid-auto-rows: 2rem;
+		// grid-auto-columns: 2rem repeat(4, 1fr);
+	}
+	// &__table-row {
+	// 	display: flex;
+	// }
+}

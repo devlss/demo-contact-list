@@ -1,30 +1,20 @@
-import {FC, useCallback, useEffect, useMemo} from 'react';
-import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {FC, useCallback, useEffect} from 'react';
+import {Container} from 'react-bootstrap';
+import {useAppDispatch} from '../../store/hooks';
 import {getContactsRequest} from '../../store/Contacts/actions';
 import {setIsErrorAction} from '../../store/Auth/actions';
-import type {ContactsProps} from './ContactsPage.types';
+import {ContactsHeaderComponent, ContactsListComponent, ContactsFooterComponent} from '../../components/ContactPageComponents';
+import {ModalConfirmComponent} from '../../components/ContactModals';
+import type {ContactsPageProps} from './ContactsPage.types';
 
 import './ContactsPage.scss';
 
-export const ContactsPage: FC<ContactsProps> = () => {
+export const ContactsPage: FC<ContactsPageProps> = () => {
 	const dispatch = useAppDispatch();
-	const contacts = useAppSelector(({contacts}) => contacts.list);
-	const contactElements = useMemo(
-		() =>
-			contacts.map((contact) => (
-				<div key={contact.id}>
-					<div>{contact.name}</div>
-					<div>{contact.phone}</div>
-					<div>{contact.email}</div>
-				</div>
-			)),
-		[contacts]
-	);
 
 	const contactsRequest = useCallback(async () => {
 		try {
 			await dispatch(getContactsRequest());
-			dispatch(setIsErrorAction(false));
 		} catch (error) {
 			dispatch(setIsErrorAction(true));
 		}
@@ -34,5 +24,14 @@ export const ContactsPage: FC<ContactsProps> = () => {
 		contactsRequest();
 	}, [contactsRequest]);
 
-	return <div className="contacts-page">{contactElements}</div>;
+	return (
+		<Container className="wrapper" as="main">
+			<div className="contacts-page d-flex flex-column align-self-stretch my-3 my-md-5 rounded-3 overflow-hidden shadow">
+				<ContactsHeaderComponent />
+				<ContactsListComponent />
+				<ContactsFooterComponent />
+			</div>
+			<ModalConfirmComponent />
+		</Container>
+	);
 };

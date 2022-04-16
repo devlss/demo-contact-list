@@ -1,19 +1,22 @@
 import {AxiosResponse} from 'axios';
 import {ax} from './init';
-import type {IApiContact, IContact} from './types';
+import type {IApiContact, IApiGetOptions, IContact} from './types';
 
 /**
  * Запрос списка записей
- * @param page    Номер страницы запроса
- * @param search  Строка для поиска в записях
+ * @param options Параметры запроса
  * @return        Кортеж [Выборка записей, количество всего записей]
  */
-export async function apiGetContacts(page = 1, search = ''): Promise<[[IApiContact], number]> {
+export async function apiGetContacts(options: IApiGetOptions): Promise<[[IApiContact], number]> {
 	const response = await ax.get<[IApiContact]>('/contacts', {
 		params: {
-			_page: page,
-			_limit: 20,
-			q: search
+			_start: options.start,
+			_end: options.end,
+			_page: options.page,
+			_limit: options.limit,
+			_sort: options.sort,
+			_order: options.order,
+			q: options.query
 		}
 	});
 
@@ -23,12 +26,12 @@ export async function apiGetContacts(page = 1, search = ''): Promise<[[IApiConta
 /**
  * Запрос создания контакта на сервере
  * @param contact  Информация о записи
- * @returns        Кортеж [Созданный контакт, количество всего записей]
+ * @returns        Созданный контакт
  */
-export async function apiPostContact(contact: IContact): Promise<[IApiContact, number]> {
+export async function apiPostContact(contact: IContact): Promise<IApiContact> {
 	const response = await ax.post<IApiContact>('/contacts', {contact});
 
-	return [response.data, getCount(response)];
+	return response.data;
 }
 
 /**
@@ -46,12 +49,11 @@ export async function apiPutContact(contact: IContact, id: number): Promise<IApi
 /**
  * Запрос удаления контакта на сервере
  * @param id   ID контакта
- * @returns    Количество всего записей
  */
-export async function apiDeleteContact(id: number): Promise<number> {
-	const response = await ax.delete<boolean>(`/contacts/${id}`);
+export async function apiDeleteContact(id: number): Promise<void> {
+	await ax.delete<boolean>(`/contacts/${id}`);
 
-	return getCount(response);
+	return;
 }
 
 /**
@@ -60,5 +62,5 @@ export async function apiDeleteContact(id: number): Promise<number> {
  * @returns         Количество записей на сервере
  */
 function getCount(response: AxiosResponse) {
-	return Number.parseInt(response.headers["X-Total-Count"]) || 0;
+	return Number.parseInt(response.headers['x-total-count']) || 0;
 }

@@ -8,11 +8,11 @@ const initialState: IAuthState = {
 
 export const authReducer = (state = initialState, action: AuthActions): IAuthState => {
 	switch (action.type) {
-		case AUTH_ACTION_TYPES.SET_KEY: {
-			return {key: action.payload, error: state.error};
-		}
 		case AUTH_ACTION_TYPES.LOGOUT: {
 			return {key: undefined, error: false};
+		}
+		case AUTH_ACTION_TYPES.SET_KEY: {
+			return {key: action.payload, error: false};
 		}
 		case AUTH_ACTION_TYPES.SET_IS_ERROR: {
 			const isError = action.payload;

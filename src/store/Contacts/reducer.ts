@@ -7,8 +7,11 @@ const initialState: IContactsListState = {
 
 export const contactsListReducer = (state = initialState, action: ContactsListActions): IContactsListState => {
 	switch (action.type) {
+		case CONTACTS_LIST_ACTION_TYPES.SET: {
+			return {list: [...action.payload.contacts], count: action.payload.count || state.count + action.payload.contacts.length};
+		}
 		case CONTACTS_LIST_ACTION_TYPES.ADD: {
-			return {list: [...action.payload.contacts], count: action.payload.count};
+			return {list: [...state.list, ...action.payload.contacts], count: action.payload.count || state.count + action.payload.contacts.length};
 		}
 		case CONTACTS_LIST_ACTION_TYPES.UPDATE:
 		case CONTACTS_LIST_ACTION_TYPES.REMOVE: {
@@ -20,7 +23,7 @@ export const contactsListReducer = (state = initialState, action: ContactsListAc
 					newList[contactId] = action.payload;
 				} else if (action.type === CONTACTS_LIST_ACTION_TYPES.REMOVE) {
 					newList.splice(contactId, 1);
-					count = action.payload.count;
+					count = state.count && state.count - 1;
 				}
 				return {list: newList, count};
 			}
