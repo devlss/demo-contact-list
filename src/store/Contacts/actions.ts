@@ -10,6 +10,7 @@ import {
 	PutContactRequest,
 	RemoveContactAction,
 	UpdateContactAction,
+	IContactWithState,
 	CONTACTS_LIST_ACTION_TYPES
 } from './types';
 
@@ -23,7 +24,7 @@ export function setContactsAction(contacts: IApiContact[], count?: number): SetC
 	};
 }
 
-export function addContactsAction(contacts: IApiContact[], count?: number): AddContactsAction {
+export function addContactsAction(contacts: IContactWithState[], count?: number): AddContactsAction {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.ADD,
 		payload: {
@@ -33,7 +34,7 @@ export function addContactsAction(contacts: IApiContact[], count?: number): AddC
 	};
 }
 
-export function updateContactAction(payload: IApiContact): UpdateContactAction {
+export function updateContactAction(payload: IContactWithState): UpdateContactAction {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.UPDATE,
 		payload

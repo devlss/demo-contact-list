@@ -10,16 +10,6 @@
 			content: '\00D7';
 		}
 	}
-	&__create-icon {
-		&::before {
-			content: '\00274C';
-		}
-	}
-	&__search-icon {
-		&::before {
-			content: '\00274C';
-		}
-	}
 	&__button-group {
 		opacity: 0.2;
 		transition: opacity 0.15s;

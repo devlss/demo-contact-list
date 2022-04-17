@@ -47,10 +47,10 @@ export const LoginPage: FC<LoginProps> = () => {
 						{({handleSubmit, isSubmitting}) => (
 							<Form noValidate onSubmit={handleSubmit}>
 								<Row className="mb-3">
-									<AppInputComonent field="login" />
+									<AppInputComonent field="login" autoComplete="username" label="Username" />
 								</Row>
 								<Row className="mb-3">
-									<AppInputComonent field="password" type="password" />
+									<AppInputComonent field="password" type="password" label="Password" autoComplete="current-password" />
 								</Row>
 								<Row className="mt-5 justify-content-center">
 									<Col>

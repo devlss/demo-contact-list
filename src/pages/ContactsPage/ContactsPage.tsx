@@ -4,7 +4,7 @@ import {useAppDispatch} from '../../store/hooks';
 import {getContactsRequest} from '../../store/Contacts/actions';
 import {setIsErrorAction} from '../../store/Auth/actions';
 import {ContactsHeaderComponent, ContactsListComponent, ContactsFooterComponent} from '../../components/ContactPageComponents';
-import {ModalConfirmComponent} from '../../components/ContactModals';
+import {ModalConfirmComponent, ModalEditorComponent} from '../../components/ContactModals';
 import type {ContactsPageProps} from './ContactsPage.types';
 
 import './ContactsPage.scss';
@@ -32,6 +32,7 @@ export const ContactsPage: FC<ContactsPageProps> = () => {
 				<ContactsFooterComponent />
 			</div>
 			<ModalConfirmComponent />
+			<ModalEditorComponent />
 		</Container>
 	);
 };

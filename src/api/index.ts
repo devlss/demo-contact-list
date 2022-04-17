@@ -29,7 +29,7 @@ export async function apiGetContacts(options: IApiGetOptions): Promise<[[IApiCon
  * @returns        Созданный контакт
  */
 export async function apiPostContact(contact: IContact): Promise<IApiContact> {
-	const response = await ax.post<IApiContact>('/contacts', {contact});
+	const response = await ax.post<IApiContact>('/contacts', {...contact});
 
 	return response.data;
 }
@@ -41,7 +41,7 @@ export async function apiPostContact(contact: IContact): Promise<IApiContact> {
  * @returns        Измененный контакт
  */
 export async function apiPutContact(contact: IContact, id: number): Promise<IApiContact> {
-	const response = await ax.put<IApiContact>(`/contacts/${id}`, {contact});
+	const response = await ax.put<IApiContact>(`/contacts/${id}`, {...contact});
 
 	return response.data;
 }

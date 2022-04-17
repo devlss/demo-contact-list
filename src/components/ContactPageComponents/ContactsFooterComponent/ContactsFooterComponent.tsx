@@ -98,7 +98,7 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 	}, [contactsRequest]);
 
 	return (
-		<footer className="contacts-footer d-flex justify-content-center pt-3 px-md-5 border-top">
+		<footer className="contacts-footer d-flex justify-content-center pt-3 px-3 px-md-5 border-top">
 			<Pagination>
 				{firstPageItem} {pageItems} {lastPageItem}
 			</Pagination>

@@ -1,13 +1,19 @@
 import {IApiContact, IApiGetOptions, IContact} from '../../api/types';
 
 export interface IContactsListState {
-	list: IApiContact[];
+	list: IContactWithState[];
 	count: number;
 }
 
 export interface IPutRequestParams {
 	id: number;
 	contact: IContact;
+}
+
+export type RecordStates = 'new' | 'edited';
+
+export interface IContactWithState extends IApiContact {
+	state?: RecordStates;
 }
 
 export const enum CONTACTS_LIST_ACTION_TYPES {
@@ -24,17 +30,17 @@ export const enum CONTACTS_LIST_ACTION_TYPES {
 
 export interface SetContactsAction {
 	type: CONTACTS_LIST_ACTION_TYPES.SET;
-	payload: {contacts: IApiContact[], count?: number};
+	payload: {contacts: IApiContact[]; count?: number};
 }
 
 export interface AddContactsAction {
 	type: CONTACTS_LIST_ACTION_TYPES.ADD;
-	payload: {contacts: IApiContact[], count?: number};
+	payload: {contacts: IContactWithState[]; count?: number};
 }
 
 export interface UpdateContactAction {
 	type: CONTACTS_LIST_ACTION_TYPES.UPDATE;
-	payload: IApiContact;
+	payload: IContactWithState;
 }
 export interface RemoveContactAction {
 	type: CONTACTS_LIST_ACTION_TYPES.REMOVE;
@@ -61,7 +67,7 @@ export interface PutContactRequest {
 
 export interface DeleteContactRequest {
 	type: CONTACTS_LIST_ACTION_TYPES.R_DELETE;
-	payload: {id: number, options: IApiGetOptions};
+	payload: {id: number; options: IApiGetOptions};
 }
 
 export type ContactsListActions = SetContactsAction | AddContactsAction | UpdateContactAction | RemoveContactAction | ClearContactsAction;

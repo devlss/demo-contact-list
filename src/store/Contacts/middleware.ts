@@ -15,11 +15,11 @@ export const contactsListMiddleware: AppMiddleware =
 			}
 			case CONTACTS_LIST_ACTION_TYPES.R_POST: {
 				const contact = await apiPostContact(action.payload);
-				return next(addContactsAction([contact]));
+				return next(addContactsAction([{...contact, state: 'new'}]));
 			}
 			case CONTACTS_LIST_ACTION_TYPES.R_PUT: {
 				const contact = await apiPutContact(action.payload.contact, action.payload.id);
-				return next(updateContactAction(contact));
+				return next(updateContactAction({...contact, state: 'edited'}));
 			}
 			case CONTACTS_LIST_ACTION_TYPES.R_DELETE: {
 				await apiDeleteContact(action.payload.id);

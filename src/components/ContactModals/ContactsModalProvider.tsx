@@ -1,23 +1,20 @@
 import {createContext, useCallback, useContext, useState} from 'react';
-import {IContactsPageModalState, IContactsPageModalProvider, ModalsActions} from '.';
+import {ContactsPageModalActions, IContactsPageModalProvider} from '.';
 import type {IApiContact} from '../../api/types';
 
-const ModalContext = createContext<IContactsPageModalProvider | undefined>(undefined);
+const ModalContext = createContext<IContactsPageModalProvider>({
+	state: {type: 'other'},
+	showModal: () => {},
+	hideModal: () => {}
+});
 
 export const ContactsModalProvider = ({children}: {children: JSX.Element}) => {
-	const [state, setState] = useState<IContactsPageModalState>();
-	const showModal = useCallback((action: ModalsActions, contact: IApiContact, callback: (contact: IApiContact) => void) => {
-		setState({
-			action,
-			contact,
-			callback
-		});
-	}, []);
-	const hideModal = () => setState(undefined);
+	const [state, setState] = useState<ContactsPageModalActions>({type: 'other'});
+	const hideModal = () => setState({type: 'other'});
 
 	const ctxState = {
 		state,
-		showModal,
+		showModal: setState,
 		hideModal
 	};
 
