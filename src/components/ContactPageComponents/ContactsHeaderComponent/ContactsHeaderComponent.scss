@@ -13,7 +13,12 @@
 	}
 	&__search-icon {
 		&::before {
-			content: '\00274C\00a0';
+			content: '\1F50D';
+		}
+	}
+	&__delete-icon {
+		&::before {
+			content: '\00D7';
 		}
 	}
 }
