@@ -61,7 +61,7 @@ export const contactsListReducer = (state = initialState, action: ContactsListAc
 			return {...state, page: action.payload};
 		}
 		case CONTACTS_LIST_ACTION_TYPES.SET_QUERY: {
-			return {...state, query: action.payload};
+			return {...state, page: 1, query: action.payload};
 		}
 		case CONTACTS_LIST_ACTION_TYPES.CLEAR: {
 			return initialState;

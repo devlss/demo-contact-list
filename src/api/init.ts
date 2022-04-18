@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {getAuthKey} from '../auth/authHelper';
 
-const API_URL = new URL(`http://localhost:${process.env.REACT_APP_SERVER_PORT}`);
+const API_URL = new URL(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/api`);
 
 /**
  * Клиент для json-server API

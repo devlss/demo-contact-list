@@ -2,6 +2,7 @@
 /node_modules
 Procfile
 Dockerfile
+LICENSE
 *.*
 
 !*.tsx
