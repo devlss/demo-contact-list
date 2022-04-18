@@ -1,6 +1,5 @@
-import {createContext, useCallback, useContext, useState} from 'react';
+import {createContext, useContext, useState} from 'react';
 import {ContactsPageModalActions, IContactsPageModalProvider} from '.';
-import type {IApiContact} from '../../api/types';
 
 const ModalContext = createContext<IContactsPageModalProvider>({
 	state: {type: 'other'},

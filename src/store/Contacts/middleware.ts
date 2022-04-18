@@ -1,11 +1,13 @@
 import {apiDeleteContact, apiGetContacts, apiPostContact, apiPutContact} from '../../api';
-import {setContactsAction, addContactsAction, removeContactAction, updateContactAction} from './actions';
+import {setContactsAction, addContactAction, removeContactAction, updateContactAction} from './actions';
+import {contactsIsLastPageSelector, contactsPageSelector, contactsQuerySelector} from './selectors';
 import {CHUNK_SIZE} from '../../params';
 import {ContactsListRequests, CONTACTS_LIST_ACTION_TYPES} from './types';
 import type {AppMiddleware} from '../types';
+import type {IApiContact} from '../../api/types';
 
 export const contactsListMiddleware: AppMiddleware =
-	({dispatch}) =>
+	({getState}) =>
 	(next) =>
 	async (action: ContactsListRequests) => {
 		switch (action.type) {
@@ -15,7 +17,7 @@ export const contactsListMiddleware: AppMiddleware =
 			}
 			case CONTACTS_LIST_ACTION_TYPES.R_POST: {
 				const contact = await apiPostContact(action.payload);
-				return next(addContactsAction([{...contact, state: 'new'}]));
+				return next(addContactAction({...contact, state: 'new'}));
 			}
 			case CONTACTS_LIST_ACTION_TYPES.R_PUT: {
 				const contact = await apiPutContact(action.payload.contact, action.payload.id);
@@ -23,21 +25,16 @@ export const contactsListMiddleware: AppMiddleware =
 			}
 			case CONTACTS_LIST_ACTION_TYPES.R_DELETE: {
 				await apiDeleteContact(action.payload.id);
-				if (action.payload.options && action.payload.options.page) {
-					const requestToReplace = {...action.payload.options};
-					requestToReplace.start = action.payload.options.page * CHUNK_SIZE - 1;
-					requestToReplace.limit = 1;
-					delete requestToReplace.page;
-					dispatch(removeContactAction(action.payload.id));
-					const contactTuple = await apiGetContacts(requestToReplace);
-					if (contactTuple[0]) {
-						return next(addContactsAction(...contactTuple));
-					} else {
-						return;
-					}
-				} else {
-					return next(removeContactAction(action.payload.id));
+				const state = getState();
+				const isLastPage = contactsIsLastPageSelector(state);
+				let contact: IApiContact | undefined = undefined;
+				if (!isLastPage) {
+					const page = contactsPageSelector(state);
+					const query = contactsQuerySelector(state);
+					const [contacts] = await apiGetContacts({start: page * CHUNK_SIZE - 1, limit: 1, query});
+					contact = contacts[0];
 				}
+				return next(removeContactAction(action.payload.id, contact));
 			}
 			default:
 				return next(action);

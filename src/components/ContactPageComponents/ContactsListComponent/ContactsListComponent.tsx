@@ -1,11 +1,12 @@
-import {FC, useCallback, useMemo} from 'react';
+import {FC, useCallback, useEffect, useMemo} from 'react';
 import {Button, ButtonGroup, Table} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import {deleteContactRequest} from '../../../store/Contacts/actions';
+import {deleteContactRequest, getContactsRequest} from '../../../store/Contacts/actions';
+import {contactsListSelector, contactsPageSelector, contactsQuerySelector} from '../../../store/Contacts/selectors';
 import {ModalConsumer} from '../../ContactModals';
+import {setIsErrorAction} from '../../../store/Auth/actions';
 import type {ContactsListComponentProps} from './ContactsListComponent.types';
 import type {RecordStates} from '../../../store/Contacts/types';
-import type {AppState} from '../../../store/types';
 import type {IApiContact} from '../../../api/types';
 
 import './ContactsListComponent.scss';
@@ -21,13 +22,25 @@ const setRecordStateClass = (state?: RecordStates) => {
 	}
 };
 
-const contactsListSelector = ({contacts}: AppState) => contacts.list;
-
 export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 	const dispatch = useAppDispatch();
 	const contacts = useAppSelector(contactsListSelector);
+	const page = useAppSelector(contactsPageSelector);
+	const query = useAppSelector(contactsQuerySelector);
 	const context = ModalConsumer();
 	const showModal = context && context.showModal;
+
+	const contactsRequest = useCallback(async () => {
+		try {
+			await dispatch(getContactsRequest(page, undefined, query));
+		} catch (error) {
+			dispatch(setIsErrorAction(true));
+		}
+	}, [dispatch, page, query]);
+
+	useEffect(() => {
+		contactsRequest();
+	}, [contactsRequest]);
 
 	const deleteRecord = useCallback(
 		(contact: IApiContact) => {
@@ -78,3 +91,4 @@ export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 		</div>
 	);
 };
+

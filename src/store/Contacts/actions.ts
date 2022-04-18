@@ -11,10 +11,12 @@ import {
 	RemoveContactAction,
 	UpdateContactAction,
 	IContactWithState,
+	SetPageContactsAction,
+	SetQueryContactsAction,
 	CONTACTS_LIST_ACTION_TYPES
 } from './types';
 
-export function setContactsAction(contacts: IApiContact[], count?: number): SetContactsAction {
+export function setContactsAction(contacts: IApiContact[], count: number): SetContactsAction {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.SET,
 		payload: {
@@ -24,13 +26,10 @@ export function setContactsAction(contacts: IApiContact[], count?: number): SetC
 	};
 }
 
-export function addContactsAction(contacts: IContactWithState[], count?: number): AddContactsAction {
+export function addContactAction(payload: IContactWithState): AddContactsAction {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.ADD,
-		payload: {
-			contacts,
-			count
-		}
+		payload
 	};
 }
 
@@ -41,12 +40,27 @@ export function updateContactAction(payload: IContactWithState): UpdateContactAc
 	};
 }
 
-export function removeContactAction(id: number): RemoveContactAction {
+export function removeContactAction(id: number, replaceContact?: IApiContact): RemoveContactAction {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.REMOVE,
 		payload: {
-			id
+			id,
+			replaceContact
 		}
+	};
+}
+
+export function setPageContactsAction(payload: number): SetPageContactsAction {
+	return {
+		type: CONTACTS_LIST_ACTION_TYPES.SET_PAGE,
+		payload
+	};
+}
+
+export function setQueryContactsAction(payload?: string): SetQueryContactsAction {
+	return {
+		type: CONTACTS_LIST_ACTION_TYPES.SET_QUERY,
+		payload
 	};
 }
 
@@ -56,7 +70,7 @@ export function clearContactsAction(): ClearContactsAction {
 	};
 }
 
-export function getContactsRequest(page = 1, limit = CHUNK_SIZE, query = ''): GetContactsRequest {
+export function getContactsRequest(page = 1, limit = CHUNK_SIZE, query?: string): GetContactsRequest {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.R_GET,
 		payload: {
@@ -84,16 +98,11 @@ export function putContactRequest(id: number, contact: IContact): PutContactRequ
 	};
 }
 
-export function deleteContactRequest(id: number, page = 1, limit = CHUNK_SIZE, query = ''): DeleteContactRequest {
+export function deleteContactRequest(id: number): DeleteContactRequest {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.R_DELETE,
 		payload: {
-			id,
-			options: {
-				page,
-				limit,
-				query
-			}
+			id
 		}
 	};
 }

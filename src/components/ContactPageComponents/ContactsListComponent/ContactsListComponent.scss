@@ -30,12 +30,6 @@
 		&__column-number {
 			width: 3em;
 		}
-		// &__column-name {
-		// }
-		// &__column-phone {
-		// }
-		// &__column-email {
-		// }
 		&__column-buttons {
 			width: 5em;
 		}
@@ -46,11 +40,5 @@
 		grid-template-areas:
 			'head-num head-name head-phone head-email head-buttons'
 			'num name phone email buttons';
-		// grid-auto-flow: column;
-		// grid-auto-rows: 2rem;
-		// grid-auto-columns: 2rem repeat(4, 1fr);
 	}
-	// &__table-row {
-	// 	display: flex;
-	// }
 }

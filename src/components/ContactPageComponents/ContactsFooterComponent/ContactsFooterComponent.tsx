@@ -1,11 +1,8 @@
-import {FC, useCallback, useEffect, useMemo, useState} from 'react';
+import {FC, useMemo} from 'react';
 import {Pagination} from 'react-bootstrap';
-import {createSelector} from 'reselect';
-import {setIsErrorAction} from '../../../store/Auth/actions';
-import {getContactsRequest} from '../../../store/Contacts/actions';
+import { setPageContactsAction} from '../../../store/Contacts/actions';
 import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import {CHUNK_SIZE} from '../../../params';
-import type {AppState} from '../../../store/types';
+import {contactsPageSelector, contactsPagesSelector} from '../../../store/Contacts/selectors';
 import type {ContactsFooterComponentProps} from './ContactsFooterComponent.types';
 
 import './ContactsFooterComponent.scss';
@@ -15,13 +12,10 @@ import './ContactsFooterComponent.scss';
  */
 const PAGE_RADIUS = 2;
 
-const contactsCountSelector = ({contacts}: AppState) => contacts.count;
-const pagesSelector = createSelector(contactsCountSelector, (contactsCountSelector) => Math.ceil(contactsCountSelector / CHUNK_SIZE));
-
 export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 	const dispatch = useAppDispatch();
-	const pages = useAppSelector(pagesSelector);
-	const [page, setPage] = useState(1);
+	const pages = useAppSelector(contactsPagesSelector);
+	const page = useAppSelector(contactsPageSelector);
 
 	const pageItems = useMemo(() => {
 		const result: JSX.Element[] = [];
@@ -32,7 +26,7 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 					active={i === page}
 					onClick={() => {
 						if (i !== page) {
-							setPage(i);
+							dispatch(setPageContactsAction(i));
 						}
 					}}
 				>
@@ -41,7 +35,7 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 			);
 		}
 		return result;
-	}, [pages, page]);
+	}, [dispatch, pages, page]);
 
 	const isNearFirst = page - 1 <= PAGE_RADIUS;
 	const isNearLast = pages - page <= PAGE_RADIUS;
@@ -52,7 +46,7 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 					<Pagination.Item
 						onClick={() => {
 							if (!isNearFirst) {
-								setPage(1);
+								dispatch(setPageContactsAction(1));
 							}
 						}}
 					>
@@ -62,7 +56,7 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 				</>
 			),
 
-		[isNearFirst]
+		[dispatch, isNearFirst]
 	);
 
 	const lastPageItem = useMemo(
@@ -73,7 +67,7 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 					<Pagination.Item
 						onClick={() => {
 							if (!isNearLast) {
-								setPage(pages);
+								dispatch(setPageContactsAction(pages));
 							}
 						}}
 					>
@@ -82,20 +76,8 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 				</>
 			),
 
-		[isNearLast, pages]
+		[dispatch, isNearLast, pages]
 	);
-
-	const contactsRequest = useCallback(async () => {
-		try {
-			await dispatch(getContactsRequest(page));
-		} catch (error) {
-			dispatch(setIsErrorAction(true));
-		}
-	}, [dispatch, page]);
-
-	useEffect(() => {
-		contactsRequest();
-	}, [contactsRequest]);
 
 	return (
 		<footer className="contacts-footer d-flex justify-content-center pt-3 px-3 px-md-5 border-top">
