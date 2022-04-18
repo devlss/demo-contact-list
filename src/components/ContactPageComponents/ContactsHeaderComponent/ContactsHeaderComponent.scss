@@ -1,24 +1,4 @@
 .contacts-header {
 	background-color: var(--bs-gray-300);
 	z-index: 3;
-	&__logout {
-		&::before {
-			content: '\21D0\00a0';
-		}
-	}
-	&__new-icon {
-		&::before {
-			content: '+\00a0';
-		}
-	}
-	&__search-icon {
-		&::before {
-			content: '\1F50D';
-		}
-	}
-	&__delete-icon {
-		&::before {
-			content: '\00D7';
-		}
-	}
 }

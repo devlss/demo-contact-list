@@ -8,7 +8,7 @@ import {store} from './store';
 export const App = () => {
 	return (
 		<Provider store={store}>
-			<ThemeProvider breakpoints={['md']}>
+			<ThemeProvider breakpoints={['xs', 'sm', 'md', 'lg']}>
 				<BrowserRouter>
 					<AppRouter />
 				</BrowserRouter>

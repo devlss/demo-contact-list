@@ -1,26 +1,14 @@
 import {FC, useCallback, useEffect, useMemo} from 'react';
-import {Button, ButtonGroup, Table} from 'react-bootstrap';
+import {Badge, Button, ButtonGroup, Col, Row} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../../store/hooks';
 import {deleteContactRequest, getContactsRequest} from '../../../store/Contacts/actions';
 import {contactsListSelector, contactsPageSelector, contactsQuerySelector} from '../../../store/Contacts/selectors';
 import {ModalConsumer} from '../../ContactModals';
 import {setIsErrorAction} from '../../../store/Auth/actions';
 import type {ContactsListComponentProps} from './ContactsListComponent.types';
-import type {RecordStates} from '../../../store/Contacts/types';
 import type {IApiContact} from '../../../api/types';
 
 import './ContactsListComponent.scss';
-
-const setRecordStateClassPreffix = 'border-end-0 border-top-0 border-bottom-0 border-5 border-';
-const setRecordStateClass = (state?: RecordStates) => {
-	if (state === 'new') {
-		return setRecordStateClassPreffix + 'success';
-	} else if (state === 'edited') {
-		return setRecordStateClassPreffix + 'warning';
-	} else {
-		return '';
-	}
-};
 
 export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 	const dispatch = useAppDispatch();
@@ -52,43 +40,57 @@ export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 	const contactElements = useMemo(
 		() =>
 			contacts.map((contact) => (
-				<tr
-					key={contact.id}
-					className={`contants-list__table-row ${setRecordStateClass(contact.state)}`}
-				>
-					<td>{contact.id}</td>
-					<td>{contact.name}</td>
-					<td>{contact.phone}</td>
-					<td>{contact.email}</td>
-					<td className="text-end">
+				<Row key={contact.id} className="contacts-list__table-row align-items-center gx-0 p-3 py-lg-2 border border-1 rounded-3">
+					<Col xs={1} className="mb-3 mb-lg-0">
+						<Badge bg="light" text="dark" className={contact.state ? 'badge-mark badge-mark_' + contact.state : ''}>
+							{contact.id}
+						</Badge>
+					</Col>
+					<Col xs={11} lg={3} className="text-truncate mb-3 mb-lg-0">
+						{contact.name}
+					</Col>
+					<Col lg={2} className="text-truncate">
+						{contact.phone}
+					</Col>
+					<Col lg={4} className="text-truncate mb-3 mb-lg-0">
+						{contact.email}
+					</Col>
+					<Col lg={2} className="flex-table__col-id text-lg-end mb-2 mb-lg-0">
 						<ButtonGroup size="sm" className="contacts-list__button-group">
-							<Button variant="outline-secondary contacts-list__edit-icon" onClick={() => showModal && showModal({type: 'edit', contact})} />
+							<Button variant="outline-secondary" onClick={() => showModal && showModal({type: 'edit', contact})} className="button__icon_edit">
+								<span className="button__text d-inline d-lg-none">Edit</span>
+							</Button>
 							<Button
-								variant="outline-danger contacts-list__delete-icon"
+								variant="outline-danger contacts-list__icon_delete"
 								onClick={() => showModal && showModal({type: 'delete', contact, callback: deleteRecord})}
-							/>
+								className="button__icon_delete"
+							>
+								<span className="button__text d-inline d-lg-none">Delete</span>
+							</Button>
 						</ButtonGroup>
-					</td>
-				</tr>
+					</Col>
+				</Row>
 			)),
 		[showModal, contacts, deleteRecord]
 	);
 
 	return (
-		<div className="contacts-list flex-grow-1 p-3 pt-0 px-md-5">
-			<Table borderless hover className="contacts-list-table">
-				<thead className="contacts-list-table__header">
-					<tr>
-						<th className="contacts-list-table__column-number">#</th>
-						<th>Name</th>
-						<th>Phone</th>
-						<th>Email</th>
-						<th className="contacts-list-table__column-buttons"></th>
-					</tr>
-				</thead>
-				<tbody>{contactElements}</tbody>
-			</Table>
+		<div className="contacts-list flex-grow-1 d-flex flex-column align-items-stretch gap-2 px-3 px-md-5 py-2 pt-lg-0">
+			<Row className="contacts-list__table-header align-items-center d-none d-lg-flex gx-0 p-3 p-lg-2">
+				<Col xs={4} sm={1} className="mb-3 mb-lg-0">
+					<span className="px-2 fw-bold">#</span>
+				</Col>
+				<Col xs={8} lg={3} className="text-truncate mb-3 mb-lg-0">
+					Name
+				</Col>
+				<Col lg={2} className="text-truncate">
+					Phone
+				</Col>
+				<Col lg={4} className="text-truncate mb-3 mb-lg-0">
+					Email
+				</Col>
+			</Row>
+			{contactElements}
 		</div>
 	);
 };
-

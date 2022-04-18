@@ -41,19 +41,19 @@ export const ContactsHeaderComponent: FC<ContactsHeaderComponentProps> = () => {
 	}, [dispatch]);
 
 	return (
-		<header className="contacts-header d-flex justify-content-center align-items-center gap-3 py-2 px-3 px-md-5 border-bottom">
-			<Button variant="outline-secondary contacts-header__logout" onClick={() => dispatch(logoutAction())}>
-				Logout
+		<header className="contacts-header d-flex justify-content-center align-items-center gap-2 pap-sm-3 py-2 px-3 px-md-5 border-bottom">
+			<Button variant="outline-secondary" onClick={() => dispatch(logoutAction())} className="button__icon_logout">
+				<span className="button__text d-none d-sm-inline">Logout</span>
 			</Button>
 			<Form className="flex-grow-1">
 				<InputGroup>
-					<InputGroup.Text className="contacts-header__search-icon" />
+					<InputGroup.Text className="button__icon_search px-1 px-sm-2" />
 					<Form.Control ref={inputRef} type="text" placeholder="search" onChange={debounce(searchHandler, 500)} />
-					<Button variant="outline-secondary" onClick={clearHandler} className="contacts-header__delete-icon"/>
+					<Button variant="outline-secondary" onClick={clearHandler} className="button__icon_delete" />
 				</InputGroup>
 			</Form>
-			<Button variant="success contacts-header__new-icon" onClick={() => showModal && showModal({type: 'new', callback: createRecord})}>
-				Add
+			<Button variant="success" onClick={() => showModal && showModal({type: 'new', callback: createRecord})} className="button__icon_new">
+				<span className="button__text d-none d-sm-inline">Add</span>
 			</Button>
 		</header>
 	);

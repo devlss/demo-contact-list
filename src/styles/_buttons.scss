@@ -1,0 +1,22 @@
+.button {
+	&__icon {
+		&_logout::before {
+			content: '\21D0';
+		}
+		&_search::before {
+			content: '\1F50D';
+		}
+		&_new::before {
+			content: '+';
+		}
+		&_edit::before {
+			content: '\00270E';
+		}
+		&_delete::before {
+			content: '\00D7';
+		}
+	}
+	&__text::before {
+		content: '\00a0';
+	}
+}

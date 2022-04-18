@@ -12,9 +12,9 @@ import {AppInputComonent} from '../AppInputComponent';
 const loginInitialValues = {name: '', phone: '', email: ''};
 const phoneRegexpSimple = /^\+7\d{10}$/gi;
 const loginValidationSchema = Yup.object().shape({
-	name: Yup.string().min(3, 'Min length 3').max(32, 'Max length 32').required('Required'),
+	name: Yup.string().min(3, 'Min length 3').max(64, 'Max length 64').required('Required'),
 	phone: Yup.string().matches(phoneRegexpSimple, 'Phone number is not valid'),
-	email: Yup.string().email('Email format is not valid')
+	email: Yup.string().email('Email format is not valid').max(64, 'Max length 32')
 });
 
 export const ModalEditorComponent: FC<{}> = () => {

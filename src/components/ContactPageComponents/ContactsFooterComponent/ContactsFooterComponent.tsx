@@ -1,6 +1,6 @@
 import {FC, useMemo} from 'react';
 import {Pagination} from 'react-bootstrap';
-import { setPageContactsAction} from '../../../store/Contacts/actions';
+import {setPageContactsAction} from '../../../store/Contacts/actions';
 import {useAppDispatch, useAppSelector} from '../../../store/hooks';
 import {contactsPageSelector, contactsPagesSelector} from '../../../store/Contacts/selectors';
 import type {ContactsFooterComponentProps} from './ContactsFooterComponent.types';
@@ -42,18 +42,13 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 	const firstPageItem = useMemo(
 		() =>
 			!isNearFirst && (
-				<>
-					<Pagination.Item
-						onClick={() => {
-							if (!isNearFirst) {
-								dispatch(setPageContactsAction(1));
-							}
-						}}
-					>
-						{1}
-					</Pagination.Item>
-					<Pagination.Ellipsis disabled />
-				</>
+				<Pagination.First
+					onClick={() => {
+						if (!isNearFirst) {
+							dispatch(setPageContactsAction(1));
+						}
+					}}
+				/>
 			),
 
 		[dispatch, isNearFirst]
@@ -62,18 +57,13 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 	const lastPageItem = useMemo(
 		() =>
 			!isNearLast && (
-				<>
-					<Pagination.Ellipsis disabled />
-					<Pagination.Item
-						onClick={() => {
-							if (!isNearLast) {
-								dispatch(setPageContactsAction(pages));
-							}
-						}}
-					>
-						{pages}
-					</Pagination.Item>
-				</>
+				<Pagination.Last
+					onClick={() => {
+						if (!isNearLast) {
+							dispatch(setPageContactsAction(pages));
+						}
+					}}
+				/>
 			),
 
 		[dispatch, isNearLast, pages]
