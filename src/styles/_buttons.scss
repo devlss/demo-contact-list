@@ -15,8 +15,21 @@
 		&_delete::before {
 			content: '\00D7';
 		}
+		&_username::before {
+			content: '\1F464';
+		}
+		&_phone::before {
+			content: '\260E';
+		}
+		&_email::before {
+			content: '\1F4E7';
+		}
 	}
 	&__text::before {
 		content: '\00a0';
 	}
+}
+
+i.button__icon {
+	font-style: unset;
 }

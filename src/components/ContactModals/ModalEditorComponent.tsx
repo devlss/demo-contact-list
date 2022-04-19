@@ -48,7 +48,7 @@ export const ModalEditorComponent: FC<{}> = () => {
 	return type === 'edit' || type === 'new' ? (
 		<Modal show onHide={context.hideModal} backdrop="static" keyboard={false}>
 			<Modal.Header closeButton>
-				<Modal.Title>Delete confirmation</Modal.Title>
+				<Modal.Title>Edit contact</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<Formik
@@ -62,13 +62,13 @@ export const ModalEditorComponent: FC<{}> = () => {
 					{({handleSubmit}) => (
 						<Form noValidate onSubmit={handleSubmit}>
 							<Row className="mb-3">
-								<AppInputComonent field="name" label="Name" />
+								<AppInputComonent logo={<i className="button__icon button__icon_username" />} field="name" label="Name" />
 							</Row>
 							<Row className="mb-3">
-								<AppInputComonent field="phone" type="tel" label="Phone" />
+								<AppInputComonent logo={<i className="button__icon button__icon_phone" />} field="phone" type="tel" label="Phone" />
 							</Row>
 							<Row className="mb-3">
-								<AppInputComonent field="email" type="email" label="Email" />
+								<AppInputComonent logo={<i className="button__icon button__icon_email" />} field="email" type="email" label="Email" />
 							</Row>
 						</Form>
 					)}
