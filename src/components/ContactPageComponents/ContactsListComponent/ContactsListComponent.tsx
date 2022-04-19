@@ -41,12 +41,12 @@ export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 		() =>
 			contacts.map((contact) => (
 				<Row key={contact.id} className="contacts-list__table-row align-items-center gx-0 p-3 py-lg-2 border border-1 rounded-3">
-					<Col xs={1} className="mb-3 mb-lg-0">
+					<Col xs={1} className="mb-3 mb-lg-0 me-2 me-sm-0">
 						<Badge bg="light" text="dark" className={contact.state ? 'badge-mark badge-mark_' + contact.state : ''}>
 							{contact.id}
 						</Badge>
 					</Col>
-					<Col xs={11} lg={3} className="text-truncate mb-3 mb-lg-0">
+					<Col xs={'auto'} lg={3} className="text-truncate mb-3 mb-lg-0">
 						{contact.name}
 					</Col>
 					<Col lg={2} className="text-truncate">
@@ -56,7 +56,7 @@ export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 						{contact.email}
 					</Col>
 					<Col lg={2} className="flex-table__col-id text-lg-end mb-2 mb-lg-0">
-						<ButtonGroup size="sm" className="contacts-list__button-group">
+						<ButtonGroup size="sm" className="contacts-list__button-group opacity-lg-25">
 							<Button variant="outline-secondary" onClick={() => showModal && showModal({type: 'edit', contact})} className="button__icon_edit">
 								<span className="button__text d-inline d-lg-none">Edit</span>
 							</Button>

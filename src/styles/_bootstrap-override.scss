@@ -1,0 +1,16 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+$utilities: (
+	'opacity':
+		map-merge(
+			map-get($utilities, 'opacity'),
+			(
+				responsive: true
+			)
+		)
+);
+
+@import 'bootstrap/scss/utilities/api';
