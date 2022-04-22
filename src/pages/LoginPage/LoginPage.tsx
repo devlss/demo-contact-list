@@ -34,8 +34,8 @@ export const LoginPage: FC<LoginProps> = () => {
 			<Card className="login-page col-12 col-md-4 shadow">
 				<Card.Body className="p-4 p-md-5">
 					<Card.Title as="h3">Please authenticate</Card.Title>
-					<Card.Subtitle className={`mb-4 ${locationState.isError ? 'text-danger' : ''}`}>
-						{locationState.isError ? 'Invalid credentials' : 'Enter credentials'}
+					<Card.Subtitle className={`mb-4 ${locationState && locationState.isError ? 'text-danger' : ''}`}>
+						{locationState && locationState.isError ? 'Invalid credentials' : 'Enter credentials'}
 					</Card.Subtitle>
 					<Formik
 						initialValues={loginInitialValues}
