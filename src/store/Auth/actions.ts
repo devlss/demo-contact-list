@@ -17,15 +17,9 @@ export function setKeyAction(payload: string) {
 	};
 }
 
-export function logoutAction() {
+export function logoutAction(payload = false) {
 	return {
-		type: AUTH_ACTION_TYPES.LOGOUT
-	};
-}
-
-export function setIsErrorAction(payload: boolean) {
-	return {
-		type: AUTH_ACTION_TYPES.SET_IS_ERROR,
+		type: AUTH_ACTION_TYPES.LOGOUT,
 		payload
 	};
 }

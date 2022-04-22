@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/hooks';
 import {deleteContactRequest, getContactsRequest} from '../../../store/Contacts/actions';
 import {contactsListSelector, contactsPageSelector, contactsQuerySelector} from '../../../store/Contacts/selectors';
 import {ModalConsumer} from '../../ContactModals';
-import {setIsErrorAction} from '../../../store/Auth/actions';
+import {logoutAction} from '../../../store/Auth/actions';
 import type {ContactsListComponentProps} from './ContactsListComponent.types';
 import type {IApiContact} from '../../../api/types';
 
@@ -22,7 +22,7 @@ export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 		try {
 			await dispatch(getContactsRequest(page, undefined, query));
 		} catch (error) {
-			dispatch(setIsErrorAction(true));
+			dispatch(logoutAction(true));
 		}
 	}, [dispatch, page, query]);
 
