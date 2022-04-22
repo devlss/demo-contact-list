@@ -20,7 +20,9 @@ export const ContactsListComponent: FC<ContactsListComponentProps> = () => {
 
 	const contactsRequest = useCallback(async () => {
 		try {
-			await dispatch(getContactsRequest(page, undefined, query));
+			if (page) {
+				await dispatch(getContactsRequest({page, query}));
+			}
 		} catch (error) {
 			dispatch(logoutAction(true));
 		}

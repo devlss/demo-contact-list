@@ -1,5 +1,4 @@
-import {IApiContact, IContact} from '../../api/types';
-import {CHUNK_SIZE} from '../../params';
+import {IApiContact, IApiGetOptions, IContact} from '../../api/types';
 import {
 	SetContactsAction,
 	AddContactsAction,
@@ -70,14 +69,10 @@ export function clearContactsAction(): ClearContactsAction {
 	};
 }
 
-export function getContactsRequest(page = 1, limit = CHUNK_SIZE, query?: string): GetContactsRequest {
+export function getContactsRequest(payload: IApiGetOptions): GetContactsRequest {
 	return {
 		type: CONTACTS_LIST_ACTION_TYPES.R_GET,
-		payload: {
-			page,
-			limit,
-			query
-		}
+		payload
 	};
 }
 

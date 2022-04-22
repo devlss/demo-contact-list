@@ -3,7 +3,7 @@ import {ContactsListActions, CONTACTS_LIST_ACTION_TYPES, IContactsListState} fro
 const initialState: IContactsListState = {
 	list: [],
 	count: 0,
-	page: 1,
+	page: 0,
 	query: undefined
 };
 

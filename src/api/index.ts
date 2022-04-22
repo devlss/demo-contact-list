@@ -1,4 +1,5 @@
 import {AxiosResponse} from 'axios';
+import {CHUNK_SIZE} from '../params';
 import {ax} from './init';
 import type {IApiContact, IApiGetOptions, IContact} from './types';
 
@@ -13,7 +14,7 @@ export async function apiGetContacts(options: IApiGetOptions): Promise<[[IApiCon
 			_start: options.start,
 			_end: options.end,
 			_page: options.page,
-			_limit: options.limit,
+			_limit: options.limit || CHUNK_SIZE,
 			_sort: options.sort,
 			_order: options.order,
 			q: options.query

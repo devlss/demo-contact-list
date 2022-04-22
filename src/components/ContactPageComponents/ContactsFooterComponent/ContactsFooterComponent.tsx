@@ -1,4 +1,4 @@
-import {FC, useMemo} from 'react';
+import {FC, useEffect, useMemo} from 'react';
 import {Pagination} from 'react-bootstrap';
 import {setPageContactsAction} from '../../../store/Contacts/actions';
 import {useAppDispatch, useAppSelector} from '../../../store/hooks';
@@ -16,6 +16,10 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 	const dispatch = useAppDispatch();
 	const pages = useAppSelector(contactsPagesSelector);
 	const page = useAppSelector(contactsPageSelector);
+
+	useEffect(() => {
+		dispatch(setPageContactsAction(1));
+	}, [dispatch]);
 
 	const pageItems = useMemo(() => {
 		const result: JSX.Element[] = [];
@@ -72,7 +76,9 @@ export const ContactsFooterComponent: FC<ContactsFooterComponentProps> = () => {
 	return (
 		<footer className="contacts-footer d-flex justify-content-center pt-3 px-3 px-md-5 border-top">
 			<Pagination>
-				{firstPageItem} {pageItems} {lastPageItem}
+				{firstPageItem}
+				{pageItems.length ? pageItems : <Pagination.Item disabled>{pages}</Pagination.Item>}
+				{lastPageItem}
 			</Pagination>
 		</footer>
 	);
